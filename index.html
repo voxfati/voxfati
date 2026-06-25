@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vox Fati — Oracle & Tarot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0a0815;
+      --bg2:      #110e20;
+      --gold:     #c9a84c;
+      --gold-dim: #7a6330;
+      --cream:    #e8dfc8;
+      --text:     #b8ad9e;
+      --border:   rgba(201,168,76,0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(10,8,21,0.88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      color: var(--text);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #home::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(201,168,76,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eye {
+      width: 160px; height: 160px;
+      margin-bottom: 2.5rem;
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+    .hero-sub {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.8rem, 2vw, 1rem);
+      letter-spacing: 0.35em;
+      color: var(--gold-dim);
+      margin-bottom: 2rem;
+    }
+    .hero-divider {
+      width: 160px; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: 0 auto 2rem;
+    }
+    .hero-tagline {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--cream);
+      opacity: 0.75;
+      max-width: 480px;
+      margin: 0 auto 3rem;
+    }
+    .btn {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 0.85rem 2.4rem;
+      text-decoration: none;
+      border: 1px solid var(--gold);
+      transition: background 0.3s, color 0.3s;
+      cursor: pointer;
+    }
+    .btn:hover { background: transparent; color: var(--gold); }
+    .btn-outline {
+      background: transparent;
+      color: var(--gold);
+    }
+    .btn-outline:hover { background: var(--gold); color: var(--bg); }
+
+    /* ── SECTION BASE ── */
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+    .section-divider {
+      width: 60px; height: 1px;
+      background: var(--gold);
+      margin-bottom: 2.5rem;
+      opacity: 0.6;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--bg2); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .about-text p { margin-bottom: 1.2rem; color: var(--text); font-size: 1.05rem; }
+    .about-sigil { display: flex; align-items: center; justify-content: center; }
+    .about-sigil svg { width: 280px; height: 280px; opacity: 0.85; }
+
+    /* ── PRODUCTS ── */
+    #products { background: var(--bg); }
+
+    /* Tab switcher */
+    .tab-switcher {
+      display: flex;
+      gap: 0;
+      margin-bottom: 3.5rem;
+      border: 1px solid var(--border);
+      width: fit-content;
+    }
+    .tab-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.2rem;
+      background: transparent;
+      color: var(--text);
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+      position: relative;
+    }
+    .tab-btn + .tab-btn {
+      border-left: 1px solid var(--border);
+    }
+    .tab-btn.active {
+      background: var(--gold);
+      color: var(--bg);
+    }
+    .tab-btn:not(.active):hover {
+      color: var(--gold);
+    }
+
+    /* Tab panels */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Products grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .product-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      transition: border-color 0.3s, transform 0.3s;
+      display: flex; flex-direction: column;
+    }
+    .product-card:hover { border-color: var(--gold-dim); transform: translateY(-4px); }
+    .product-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 1rem;
+    }
+    .product-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: var(--cream);
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+    .product-desc {
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+    .product-price {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+    .product-link {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold-dim);
+      padding-bottom: 2px;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .product-link:hover { color: var(--cream); border-color: var(--cream); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      letter-spacing: 0.3em;
+      margin-bottom: 0.5rem;
+    }
+    .footer-sub {
+      font-size: 0.8rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.2em;
+      margin-bottom: 1.5rem;
+    }
+    .footer-disclaimer {
+      font-size: 0.78rem;
+      color: var(--gold-dim);
+      opacity: 0.6;
+      max-width: 560px;
+      margin: 0 auto 1rem;
+    }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--gold-dim);
+      opacity: 0.4;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-sigil { order: -1; }
+      .about-sigil svg { width: 200px; height: 200px; }
+      .tab-switcher { width: 100%; }
+      .tab-btn { flex: 1; padding: 0.9rem 1rem; }
+    }
+    @media (max-width: 520px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#home" class="nav-logo">VOX · FATI</a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#products">Oracle Decks</a></li>
+      <li><a href="#products" onclick="switchTab('tarot')">Tarot</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home">
+    <svg class="hero-eye" viewBox="0 0 680 720" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="340" cy="340" r="290" fill="#0d0b1a"/>
+      <circle cx="340" cy="340" r="282" fill="none" stroke="#c9a84c" stroke-width="1.2"/>
+      <circle cx="340" cy="340" r="274" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
+      <circle cx="340" cy="58" r="3" fill="#c9a84c"/>
+      <circle cx="340" cy="622" r="3" fill="#c9a84c"/>
+      <circle cx="58" cy="340" r="3" fill="#c9a84c"/>
+      <circle cx="622" cy="340" r="3" fill="#c9a84c"/>
+      <polygon points="340,152 528,432 152,432" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.6"/>
+      <g fill="#c9a84c" opacity="0.9">
+        <polygon points="340,138 343.5,148 354,148 345.5,154.5 348.5,165 340,159 331.5,165 334.5,154.5 326,148 336.5,148"/>
+        <polygon points="205,172 207,178 213,178 208.5,181.5 210.5,187.5 205,184 199.5,187.5 201.5,181.5 197,178 203,178"/>
+        <polygon points="475,172 477,178 483,178 478.5,181.5 480.5,187.5 475,184 469.5,187.5 471.5,181.5 467,178 473,178"/>
+        <polygon points="165,242 166.5,247 172,247 167.5,250 169.5,255 165,252 160.5,255 162.5,250 158,247 163.5,247"/>
+        <polygon points="515,242 516.5,247 522,247 517.5,250 519.5,255 515,252 510.5,255 512.5,250 508,247 513.5,247"/>
+        <polygon points="148,320 149.5,325 155,325 150.5,328 152.5,333 148,330 143.5,333 145.5,328 141,325 146.5,325"/>
+        <polygon points="532,320 533.5,325 539,325 534.5,328 536.5,333 532,330 527.5,333 529.5,328 525,325 530.5,325"/>
+        <polygon points="255,148 256.5,153 262,153 257.5,156 259.5,161 255,158 250.5,161 252.5,156 248,153 253.5,153"/>
+        <polygon points="425,148 426.5,153 432,153 427.5,156 429.5,161 425,158 420.5,161 422.5,156 418,153 423.5,153"/>
+        <polygon points="155,375 156.3,379.5 161,379.5 157.2,382.2 158.7,387 155,384.2 151.3,387 152.8,382.2 149,379.5 153.7,379.5"/>
+        <polygon points="525,375 526.3,379.5 531,379.5 527.2,382.2 528.7,387 525,384.2 521.3,387 522.8,382.2 519,379.5 523.7,379.5"/>
+      </g>
+      <path d="M195,308 Q268,228 340,228 Q412,228 485,308 Q412,388 340,388 Q268,388 195,308 Z" fill="#0d0b1a" stroke="#c9a84c" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="340" cy="308" r="58" fill="#c9a84c"/>
+      <circle cx="340" cy="308" r="34" fill="#0d0b1a"/>
+      <g stroke="#c9a84c" stroke-width="2.2" stroke-linecap="round">
+        <line x1="340" y1="228" x2="340" y2="208"/>
+        <line x1="313" y1="232" x2="308" y2="212"/>
+        <line x1="367" y1="232" x2="372" y2="212"/>
+        <line x1="287" y1="244" x2="278" y2="225"/>
+        <line x1="393" y1="244" x2="402" y2="225"/>
+        <line x1="261" y1="264" x2="249" y2="248"/>
+        <line x1="419" y1="264" x2="431" y2="248"/>
+        <line x1="237" y1="289" x2="222" y2="277"/>
+        <line x1="443" y1="289" x2="458" y2="277"/>
+      </g>
+      <g stroke="#c9a84c" stroke-width="2.2" stroke-linecap="round">
+        <line x1="340" y1="388" x2="340" y2="408"/>
+        <line x1="313" y1="384" x2="308" y2="404"/>
+        <line x1="367" y1="384" x2="372" y2="404"/>
+        <line x1="287" y1="372" x2="278" y2="391"/>
+        <line x1="393" y1="372" x2="402" y2="391"/>
+        <line x1="261" y1="352" x2="249" y2="368"/>
+        <line x1="419" y1="352" x2="431" y2="368"/>
+      </g>
+      <line x1="175" y1="458" x2="505" y2="458" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/>
+      <circle cx="175" cy="458" r="2.5" fill="#c9a84c"/>
+      <circle cx="505" cy="458" r="2.5" fill="#c9a84c"/>
+      <circle cx="340" cy="458" r="2.5" fill="#c9a84c"/>
+      <text x="340" y="518" text-anchor="middle" font-family="Georgia, serif" font-size="54" font-weight="700" fill="#c9a84c" letter-spacing="16">VOX</text>
+      <line x1="265" y1="534" x2="415" y2="534" stroke="#c9a84c" stroke-width="0.7" opacity="0.4"/>
+      <text x="340" y="574" text-anchor="middle" font-family="Georgia, serif" font-size="30" font-weight="400" fill="#c9a84c" letter-spacing="24" opacity="0.85">FATI</text>
+      <path d="M248,612 Q340,646 432,612" fill="none" stroke="#c9a84c" stroke-width="0.8" opacity="0.4"/>
+      <circle cx="248" cy="612" r="2" fill="#c9a84c" opacity="0.5"/>
+      <circle cx="432" cy="612" r="2" fill="#c9a84c" opacity="0.5"/>
+      <circle cx="340" cy="629" r="2" fill="#c9a84c" opacity="0.5"/>
+    </svg>
+    <p class="hero-sub">Oracle &amp; Tarot</p>
+    <div class="hero-divider"></div>
+    <p class="hero-tagline">What is written in the stars, finds its way to those who seek.</p>
+    <a href="#products" class="btn">Explore the Collection</a>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <span class="section-label">The Oracle</span>
+          <h2 class="section-title">About Vox Fati</h2>
+          <div class="section-divider"></div>
+          <p>Vox Fati — <em>the voice of fate</em> — is a curated space for those drawn to the language of tarot, oracle, and the unseen. Every card, every deck, every tool here has been chosen with intention.</p>
+          <p>We believe the cards do not predict the future. They hold a mirror to what already lives within you — the questions you haven't asked yet, the answers you already know.</p>
+          <p>Browse our curated selection of tarot and oracle decks, books, and ritual tools, each linked directly through Amazon so you can hold them in your hands as soon as possible.</p>
+          <br/>
+          <a href="#products" class="btn btn-outline">See the Collection</a>
+        </div>
+        <div class="about-sigil">
+          <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="150" cy="150" r="140" fill="none" stroke="#c9a84c" stroke-width="0.8" opacity="0.3"/>
+            <circle cx="150" cy="150" r="130" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.2"/>
+            <polygon points="150,30 260,210 40,210" fill="none" stroke="#c9a84c" stroke-width="0.9" opacity="0.5"/>
+            <g fill="#c9a84c" opacity="0.7">
+              <polygon points="150,22 153,31 162,31 155,37 158,46 150,41 142,46 145,37 138,31 147,31"/>
+              <polygon points="75,68 77.5,76 86,76 79.5,80.5 82,89 75,84 68,89 70.5,80.5 64,76 72.5,76"/>
+              <polygon points="225,68 227.5,76 236,76 229.5,80.5 232,89 225,84 218,89 220.5,80.5 214,76 222.5,76"/>
+            </g>
+            <path d="M95,148 Q150,100 205,148 Q150,196 95,148Z" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+            <circle cx="150" cy="148" r="28" fill="#c9a84c" opacity="0.9"/>
+            <circle cx="150" cy="148" r="16" fill="#0a0815"/>
+            <g stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round">
+              <line x1="150" y1="100" x2="150" y2="90"/>
+              <line x1="130" y1="106" x2="126" y2="96"/>
+              <line x1="113" y1="120" x2="106" y2="113"/>
+              <line x1="170" y1="106" x2="174" y2="96"/>
+              <line x1="187" y1="120" x2="194" y2="113"/>
+            </g>
+            <circle cx="150" cy="280" r="3" fill="#c9a84c" opacity="0.4"/>
+            <circle cx="20" cy="150" r="3" fill="#c9a84c" opacity="0.4"/>
+            <circle cx="280" cy="150" r="3" fill="#c9a84c" opacity="0.4"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products">
+    <div class="container">
+      <span class="section-label">Curated Selection</span>
+      <h2 class="section-title">The Collection</h2>
+      <div class="section-divider"></div>
+
+      <!-- Tab switcher -->
+      <div class="tab-switcher">
+        <button class="tab-btn active" id="tab-oracle" onclick="switchTab('oracle')">Oracle Decks</button>
+        <button class="tab-btn" id="tab-tarot" onclick="switchTab('tarot')">Tarot Decks</button>
+      </div>
+
+      <!-- ORACLE PANEL -->
+      <div class="tab-panel active" id="panel-oracle">
+        <div class="products-grid">
+
+          <div class="product-card">
+            <span class="product-tag">Oracle Deck</span>
+            <h3 class="product-name">Goddesses, Gods and Guardians Oracle Cards</h3>
+            <p class="product-desc">A beautifully crafted 44-card deck by Sophie Bashford, featuring illustrations by Hillary D. Wilson. Depicts deities and spiritual guides from diverse traditions, with a comprehensive guidebook exploring their meanings and healing energies. Ideal for oracle readings, meditation, and personal reflection.</p>
+            <p class="product-price">~€17.00</p>
+            <a href="https://amzn.to/4uURp36" target="_blank" rel="nofollow noopener" class="product-link">View on Amazon →</a>
+          </div>
+
+          <div class="product-card">
+            <span class="product-tag">Oracle Deck</span>
+            <h3 class="product-name">The Wild Unknown Archetypes</h3>
+            <p class="product-desc">A unique oracle system by Kim Krans that explores universal archetypes shaping human experience. Featuring 78 beautifully illustrated cards — The Mother, The Visionary, The Wanderer, The Shadow — and an in-depth guidebook for self-discovery and spiritual insight.</p>
+            <p class="product-price">~€28.35</p>
+            <a href="https://amzn.to/4v1fVzD" target="_blank" rel="nofollow noopener" class="product-link">View on Amazon →</a>
+          </div>
+
+          <div class="product-card">
+            <span class="product-tag">Oracle Deck</span>
+            <h3 class="product-name">Woodland Wardens</h3>
+            <p class="product-desc">A 52-card deck by Jessica Roux inspired by the wisdom of nature and folklore. Plants and animals are paired as symbolic guardians, exploring themes of growth, resilience, and intuition. Enchanting artwork and a detailed guidebook make this a captivating tool for nature-inspired contemplation.</p>
+            <p class="product-price">~€18.00</p>
+            <a href="https://amzn.to/4aidfpP" target="_blank" rel="nofollow noopener" class="product-link">View on Amazon →</a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAROT PANEL -->
+      <div class="tab-panel" id="panel-tarot">
+        <div class="products-grid">
+
+          <div class="product-card">
+            <span class="product-tag">Tarot Deck</span>
+            <h3 class="product-name">Amber Moon Tarot</h3>
+            <p class="product-desc">By Malgorzata Frąckowska — a dreamy, lunar-inspired tarot deck blending contemporary art with traditional structure. Accompanied by an 80-page guidebook, it offers fresh interpretations of the classic archetypes for both beginners and experienced readers.</p>
+            <p class="product-price">~€18.69</p>
+            <a href="https://amzn.to/4vuQw2b" target="_blank" rel="nofollow noopener" class="product-link">View on Amazon →</a>
+          </div>
+
+          <div class="product-card">
+            <span class="product-tag">Tarot Deck</span>
+            <h3 class="product-name">The Classic Rider Waite Smith Tarot</h3>
+            <p class="product-desc">The foundational deck that shaped modern tarot. Arthur Edward Waite and Pamela Colman Smith's iconic 78-card deck, first published in 1909, remains the most referenced in the world — essential for beginners and seasoned readers alike.</p>
+            <p class="product-price">~€23.40</p>
+            <a href="https://amzn.to/4amBjbb" target="_blank" rel="nofollow noopener" class="product-link">View on Amazon →</a>
+          </div>
+
+          <div class="product-card">
+            <span class="product-tag">Tarot Deck</span>
+            <h3 class="product-name">Rider-Waite Tarot Deck</h3>
+            <p class="product-desc">The classic 78-card deck by Arthur Edward Waite with Pamela Colman Smith's legendary illustrations — the foundation of modern tarot reading. Accompanied by instructional material for divination, self-discovery, and spiritual guidance.</p>
+            <p class="product-price">~€23.02</p>
+            <a href="https://amzn.to/4xPg0ZR" target="_blank" rel="nofollow noopener" class="product-link">View on Amazon →</a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-logo">VOX · FATI</p>
+    <p class="footer-sub">Voice of Fate</p>
+    <p class="footer-disclaimer">This site contains affiliate links. As an Amazon Associate, Vox Fati earns from qualifying purchases at no extra cost to you.</p>
+    <p class="footer-copy">&copy; 2026 Vox Fati. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      document.getElementById('panel-' + tab).classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
