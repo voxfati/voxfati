@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog — Vox Fati</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .blog-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      text-decoration: none;
+      display: flex; flex-direction: column;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .blog-card:hover { border-color: var(--gold-dim); transform: translateY(-4px); }
+    .blog-card-meta {
+      display: flex; gap: 1rem; align-items: center;
+      margin-bottom: 1rem;
+    }
+    .blog-card-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+    }
+    .blog-card-date {
+      font-size: 0.8rem;
+      color: var(--text);
+      opacity: 0.5;
+    }
+    .blog-card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: var(--cream);
+      line-height: 1.4;
+      margin-bottom: 0.8rem;
+    }
+    .blog-card-excerpt {
+      font-size: 0.92rem;
+      color: var(--text);
+      opacity: 0.8;
+      flex: 1;
+      margin-bottom: 1.5rem;
+    }
+    .blog-card-link {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-bottom: 1px solid var(--gold-dim);
+      padding-bottom: 2px;
+      width: fit-content;
+    }
+    .blog-section { padding: 5rem 2rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="nav-logo">VOX · FATI</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="oracle.html">Oracle Decks</a></li>
+      <li><a href="tarot.html">Tarot Decks</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <span class="page-hero-label">Insights & Guides</span>
+    <h1 class="page-hero-title">The Blog</h1>
+    <p class="page-hero-sub">Explorations into tarot, oracle, symbolism, and the language of fate.</p>
+  </div>
+
+  <section class="blog-section">
+    <div class="container">
+      <div class="blog-grid">
+
+        <a href="post-how-to-choose.html" class="blog-card">
+          <div class="blog-card-meta">
+            <span class="blog-card-tag">Beginners</span>
+            <span class="blog-card-date">June 2026</span>
+          </div>
+          <h2 class="blog-card-title">How to Choose Your First Tarot Deck</h2>
+          <p class="blog-card-excerpt">With hundreds of decks available, where do you begin? We explore what to look for in your first tarot deck — from art style to symbolism to the feeling a deck gives you before you even open it.</p>
+          <span class="blog-card-link">Read More →</span>
+        </a>
+
+        <a href="post-oracle-vs-tarot.html" class="blog-card">
+          <div class="blog-card-meta">
+            <span class="blog-card-tag">Guides</span>
+            <span class="blog-card-date">June 2026</span>
+          </div>
+          <h2 class="blog-card-title">Oracle vs Tarot: What Is the Difference?</h2>
+          <p class="blog-card-excerpt">Both are tools for reflection and guidance — but they work very differently. We break down the key differences between tarot and oracle decks, and how to decide which one speaks to you.</p>
+          <span class="blog-card-link">Read More →</span>
+        </a>
+
+        <a href="post-daily-card.html" class="blog-card">
+          <div class="blog-card-meta">
+            <span class="blog-card-tag">Practice</span>
+            <span class="blog-card-date">June 2026</span>
+          </div>
+          <h2 class="blog-card-title">The Power of the Daily Card Practice</h2>
+          <p class="blog-card-excerpt">Drawing one card each morning is one of the simplest and most transformative habits you can build. Here is how to start, what to do with the card, and how to keep a reading journal.</p>
+          <span class="blog-card-link">Read More →</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="footer-logo">VOX · FATI</p>
+    <p class="footer-sub">Voice of Fate</p>
+    <p class="footer-disclaimer">This site contains affiliate links. As an Amazon Associate, Vox Fati earns from qualifying purchases at no extra cost to you.</p>
+    <p class="footer-copy">&copy; 2026 Vox Fati. All rights reserved.</p>
+  </footer>
+</body>
+</html>
