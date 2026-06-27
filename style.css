@@ -14,7 +14,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 22px;
+  font-size: 30px;
   line-height: 1.7;
 }
 nav {
@@ -133,6 +133,13 @@ nav {
   padding: 2rem;
   transition: border-color 0.3s, transform 0.3s;
   display: flex; flex-direction: column;
+}
+.product-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 1.2rem;
+  border: 1px solid var(--border);
 }
 .product-card:hover { border-color: var(--gold-dim); transform: translateY(-4px); }
 .product-tag {
