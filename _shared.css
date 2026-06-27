@@ -14,7 +14,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 18px;
+  font-size: 22px;
   line-height: 1.7;
 }
 /* NAV */
